@@ -1,113 +1,77 @@
-![Portfolio Preview](https://github.com/Abhiz2411/3D-interactive-portfolio/blob/main/public/assets/seo/og-image.png?raw=true)
+# Portafolio - Matheu Ruales
 
-# 🚀 My Portfolio Website
+Portafolio personal de **Matheu Ruales** enfocado en desarrollo full stack, inteligencia artificial y experiencias interactivas.
 
-Welcome to the repository for my personal portfolio website! 🎉 This project is a culmination of creativity, technology, and my dedication to showcasing my skills, projects, and personality in a visually stunning and interactive manner.
+## Tecnologias principales
 
-### Live preview: https://www.abhijitzende.com/
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- GSAP
+- Framer Motion
+- Spline Runtime
+- Resend
 
-![Preview](https://github.com/Abhiz2411/3D-interactive-portfolio/blob/main/public/assets/preview_video.gif?raw=true)
+## Desarrollo local
 
-https://github.com/Abhiz2411/3D-interactive-portfolio/blob/main/preview_video.mp4
+1. Instalar dependencias:
 
-This project is **inspired** by the amazing work of [Naresh Khatri](https://github.com/Naresh-Khatri/Portfolio). His innovative approach to web design and attention to detail has been a huge influence. Thank you, Naresh! 🙏
+```bash
+npm install
+```
 
-## 🔥 Features
+2. Crear variables de entorno:
 
-Here are the key highlights of my portfolio:
+```bash
+touch .env.local
+```
 
-### 🎹 **3D Interactive Animations**
-- Features a custom-made interactive keyboard built with **Spline**.
-- Each keycap represents a skill and reveals titles and descriptions on hover for an immersive experience.
-- Smooth, responsive 3D interactions that captivate visitors.
+3. Iniciar el proyecto:
 
-### ✨ **Slick Interactions & Animations**
-- Powered by **GSAP** and **Framer Motion**, delivering buttery-smooth animations on scroll, hover, and element reveals.
-- Creative motion designs that enhance storytelling and keep users engaged.
+```bash
+npm run dev
+```
 
-### 🌌 **Space-Themed Design**
-- Particles floating on a dark, cosmic background simulate an outer-space vibe.
-- Adds a unique and futuristic look to the portfolio.
+4. Abrir en:
 
-### 📱 **Responsive Design**
-- Fully responsive layout ensures the website looks and functions beautifully on all devices.
-- Optimized for both desktop and mobile experiences.
+```txt
+http://localhost:3000
+```
 
-### 🧠 **Innovative Web Design**
-- Combines cutting-edge technology with an intuitive user experience.
-- Creative use of animations and visuals to push the boundaries of modern web design.
+## Variables de entorno
 
-## 🛠️ Tech Stack
+Usa `.env.example` como referencia.
 
-The portfolio website is built using the following tools and technologies:
+Variables clave para produccion:
 
-- **Frontend:** Next.js, React, Tailwind CSS, Shadcn, Aceternity UI
-- **Animations:** GSAP, Framer Motion, Spline Runtime
-- **Other Tools:** Resend, Socket.io, Zod
+- `NEXT_PUBLIC_SITE_URL`: URL publica del sitio en Vercel.
+- `RESEND_API_KEY`: para el formulario de contacto.
+- `NEXT_PUBLIC_WS_URL` (opcional): servidor de tiempo real para cursores/chat.
+- `UMAMI_DOMAIN` y `UMAMI_SITE_ID` (opcionales): analitica.
 
-## 🌟 Getting Started
+## Despliegue en Vercel
 
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/Abhiz2411/3D-interactive-portfolio.git
-   ```
+1. Sube este repo a GitHub.
+2. En Vercel, crea un proyecto desde ese repo.
+3. En `Settings > Environment Variables`, agrega las variables del bloque anterior.
+4. Deploy:
 
-2. Navigate to the project directory:
-   ```bash
-   cd 3D-interactive-portfolio
-   ```
+```bash
+npm install
+npm run build
+```
 
-3. Install dependencies:
-   ```bash
-   npm install
-   ```
+Configuracion recomendada:
 
-4. Set up environment variables:
-   ```bash
-   # Create a .env.local file in the root directory
-   touch .env.local
+- Framework: `Next.js` (detectado automaticamente).
+- Build command: `next build` (por defecto).
+- Output: `.next` (por defecto).
+- Node.js: `22.x`.
 
-   # Add your Resend API key
-   RESEND_API_KEY=your_resend_api_key_here
-   ```
+## Contacto
 
-5. Start the development server:
-   ```bash
-   npm run dev
-   ```
-
-6. Open your browser and navigate to:
-   ```
-   http://localhost:3000
-   ```
-
-## 🚀 Deployment
-
-This project is deployed using **Vercel** for its blazing-fast performance and ease of use. You can view the live site [here](https://www.abhijitzende.com/).
-
-### Setting up Resend API on Vercel
-
-1. Sign up for a [Resend](https://resend.com) account and get your API key
-2. Go to your Vercel project settings
-3. Navigate to the "Environment Variables" section
-4. Add a new environment variable:
-   - Name: `RESEND_API_KEY`
-   - Value: Your Resend API key
-5. Save the changes and redeploy your application
-
-Note: Make sure to keep your API key secret and never commit it to your repository.
-
-## 💖 Acknowledgments
-
-A huge shoutout to [Naresh Khatri](https://github.com/Naresh-Khatri/Portfolio) for the inspiration and ideas that sparked this journey! 💡 If you're interested in creative web design, definitely check out his work.
-
-## 📬 Contact
-
-Feel free to reach out to me for collaboration, feedback, or just to say hi! 😊
-
-- **Email:** abhijitzende75@gmail.com
-- **LinkedIn:** [Your LinkedIn Profile](https://www.linkedin.com/in/zende-abhijit/)
-
----
-
-⭐ If you like this project, don't forget to give it a star!
+- Correo: `matheuruales2b2t@gmail.com`
+- LinkedIn: `https://www.linkedin.com/in/matheu-ruales-32221a331/`
+- GitHub: `https://github.com/matheuruales?tab=repositories`
+- Instagram: `https://www.instagram.com/matheu2b2t/`

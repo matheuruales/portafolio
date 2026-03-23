@@ -68,15 +68,15 @@ export const ModalBody = ({
   children: ReactNode;
   className?: string;
 }) => {
-  const { open } = useModal();
+  const { open, setOpen } = useModal();
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") setOpen(false);
-      });
-    }
-  }, []);
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [setOpen]);
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";
@@ -86,7 +86,6 @@ export const ModalBody = ({
   }, [open]);
 
   const modalRef = useRef(null);
-  const { setOpen } = useModal();
   useOutsideClick(modalRef, () => setOpen(false));
 
   return (
@@ -111,7 +110,7 @@ export const ModalBody = ({
           <motion.div
             ref={modalRef}
             className={cn(
-              "min-h-[50%] max-h-[90%] md:max-w-[40%] bg-white dark:bg-neutral-950 border border-transparent dark:border-neutral-800 md:rounded-2xl relative z-50 flex flex-col flex-1 overflow-hidden",
+              "w-[96vw] sm:w-[92vw] min-h-[50%] max-h-[90%] md:max-w-[40%] bg-white dark:bg-neutral-950 border border-transparent dark:border-neutral-800 rounded-xl md:rounded-2xl relative z-50 flex flex-col flex-1 overflow-hidden",
               className
             )}
             initial={{
@@ -138,7 +137,7 @@ export const ModalBody = ({
             }}
           >
             <CloseIcon />
-            <ScrollArea className="h-[80dvh] w-full rounded-md border">
+            <ScrollArea className="h-[75dvh] sm:h-[80dvh] w-full rounded-md border">
               {children}
             </ScrollArea>
           </motion.div>

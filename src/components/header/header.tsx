@@ -48,7 +48,10 @@ const Header = ({ loader }: HeaderProps) => {
       </div> */}
       <div className={cn(styles.bar, "flex items-center justify-between")}>
         <Link href="/" className="flex items-center justify-center">
-          <Button variant={"link"} className="text-md">
+          <Button
+            variant={"link"}
+            className={cn("text-md normal-case no-underline", styles.brandBtn)}
+          >
             {config.author}
           </Button>
         </Link>
@@ -60,18 +63,24 @@ const Header = ({ loader }: HeaderProps) => {
           onClick={() => setIsActive(!isActive)}
           className={cn(
             styles.el,
-            "m-0 p-0 h-6 bg-transparent flex items-center justify-center"
+            styles.menuButton,
+            "m-0 bg-transparent flex items-center justify-center"
           )}
         >
-          <div className="relative flex items-center">
+          <div className={cn("relative flex items-center", styles.label)}>
             <motion.p
+              className={styles.labelText}
               variants={opacity}
               animate={!isActive ? "open" : "closed"}
             >
               Menu
             </motion.p>
-            <motion.p variants={opacity} animate={isActive ? "open" : "closed"}>
-              Close
+            <motion.p
+              className={styles.labelText}
+              variants={opacity}
+              animate={isActive ? "open" : "closed"}
+            >
+              Cerrar
             </motion.p>
           </div>
           <div

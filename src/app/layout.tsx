@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Archivo_Black } from "next/font/google";
+import { Archivo_Black } from "next/font/google";
 import "./globals.css";
 import ElasticCursor from "@/components/ui/ElasticCursor";
 import Particles from "@/components/Particles";
@@ -15,7 +15,11 @@ import { config } from "@/data/config";
 import SocketContextProvider from "@/contexts/socketio";
 import RemoteCursors from "@/components/realtime/remote-cursors";
 
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://portfolio-matheu.vercel.app";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: config.title,
   description: config.description.long,
   keywords: config.keywords,
@@ -23,7 +27,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: config.title,
     description: config.description.short,
-    url: config.site,
+    url: SITE_URL,
     images: [
       {
         url: config.ogImg,
@@ -56,15 +60,27 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const shouldLoadUmami = Boolean(
+    process.env.UMAMI_DOMAIN && process.env.UMAMI_SITE_ID
+  );
+
   return (
-    <html lang="en" className={[archivoBlack.className].join(" ")}>
+    <html lang="es" className={[archivoBlack.className].join(" ")}>
       <head>
-        <Script
-          defer
-          src={process.env.UMAMI_DOMAIN}
-          data-website-id={process.env.UMAMI_SITE_ID}
-        ></Script>
+        {shouldLoadUmami && (
+          <Script
+            defer
+            src={process.env.UMAMI_DOMAIN}
+            data-website-id={process.env.UMAMI_SITE_ID}
+          />
+        )}
         {/* <Analytics /> */}
+        {process.env.NODE_ENV === "development" && (
+          <Script
+            src="https://mcp.figma.com/mcp/html-to-design/capture.js"
+            strategy="beforeInteractive"
+          />
+        )}
       </head>
       <body>
         <ThemeProvider

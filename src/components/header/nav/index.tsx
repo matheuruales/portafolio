@@ -3,11 +3,8 @@ import { motion } from "framer-motion";
 import styles from "./style.module.scss";
 import { height } from "../anim";
 import Body from "./body/body";
-import Footer from "./footer/footer";
-import Image from "./image/image";
 
 import { links } from "@/components/header/config";
-import { cn } from "@/lib/utils";
 
 interface IndexProps {
   setIsActive: (isActive: boolean) => void;
@@ -32,7 +29,7 @@ const Index: React.FC<IndexProps> = ({ setIsActive }) => {
       exit="exit"
       className={styles.nav}
     >
-      <div className={cn(styles.wrapper, 'flex justify-end sm:justify-start')}>
+      <div className={styles.wrapper}>
         <div className={styles.container}>
           <Body
             links={links}
@@ -42,11 +39,6 @@ const Index: React.FC<IndexProps> = ({ setIsActive }) => {
           />
           {/* <Footer /> */}
         </div>
-        <Image
-          src={links[selectedLink.index].thumbnail}
-          isActive={selectedLink.isActive}
-        />
-        {/* <p>{links[selectedLink.index].thumbnail}</p> */}
       </div>
     </motion.div>
   );

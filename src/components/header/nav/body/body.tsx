@@ -4,7 +4,6 @@ import styles from "./style.module.scss";
 import { blur, translate } from "../../anim";
 import { Link as LinkType } from "@/types";
 import { cn } from "@/lib/utils";
-import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface SelectedLink {
@@ -25,13 +24,21 @@ export default function Body({
   setSelectedLink,
   setIsActive,
 }: BodyProps) {
-  const params = useParams();
   const [currentHref, setCurrentHref] = useState("/");
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const { pathname, hash } = window.location;
-    setCurrentHref(pathname + hash);
-  }, [params]);
+    const updateHref = () => {
+      const { pathname, hash } = window.location;
+      setCurrentHref(pathname + hash);
+    };
+    updateHref();
+    window.addEventListener("hashchange", updateHref);
+    window.addEventListener("popstate", updateHref);
+    return () => {
+      window.removeEventListener("hashchange", updateHref);
+      window.removeEventListener("popstate", updateHref);
+    };
+  }, []);
 
   const getChars = (word: string) => {
     let chars: JSX.Element[] = [];
@@ -54,21 +61,22 @@ export default function Body({
   };
 
   return (
-    <div className={cn(styles.body, "flex flex-col items-end md:flex-row")}>
+    <div className={cn(styles.body, "flex flex-col items-stretch")}>
       {links.map((link, index) => {
         const { title, href, target } = link;
+        const isCurrent = currentHref === href;
 
         return (
           <Link
             key={`l_${index}`}
             href={href}
             target={target}
-            className="cursor-can-hover rounded-lg"
+            className={cn("cursor-can-hover", styles.linkWrap)}
           >
             <motion.p
               className={cn(
-                "rounded-lg",
-                currentHref !== href ? "text-muted-foreground" : "underline"
+                styles.linkItem,
+                isCurrent ? styles.active : styles.inactive
               )}
               onClick={() => setIsActive(false)}
               onMouseOver={() => setSelectedLink({ isActive: true, index })}
@@ -80,7 +88,10 @@ export default function Body({
                   : "closed"
               }
             >
-              {getChars(title)}
+              <span className={styles.linkIndex}>
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <span className={styles.linkTitle}>{getChars(title)}</span>
             </motion.p>
           </Link>
         );

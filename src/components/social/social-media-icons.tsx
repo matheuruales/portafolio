@@ -3,31 +3,32 @@
 import { useInView } from "framer-motion";
 import React, { useRef } from "react";
 import { Button } from "../ui/button";
-import { SiGithub, SiInstagram, SiLinkedin, SiTwitter } from "react-icons/si";
-import { Linkedin } from "lucide-react";
+import { SiGithub, SiInstagram, SiLinkedin } from "react-icons/si";
+import type { IconType } from "react-icons";
 import { config } from "@/data/config";
 import Link from "next/link";
 
-const BUTTONS = [
+type SocialButton = {
+  name: string;
+  href: string;
+  Icon: IconType;
+};
+
+const BUTTONS: SocialButton[] = [
   {
     name: "Github",
     href: config.social.github,
-    icon: <SiGithub size={"24"} color={"#fff"} />,
+    Icon: SiGithub,
   },
   {
     name: "LinkedIn",
     href: config.social.linkedin,
-    icon: <SiLinkedin size={"24"} color={"#fff"} />,
-  },
-  {
-    name: "Twitter",
-    href: config.social.twitter,
-    icon: <SiTwitter size={"24"} color={"#fff"} />,
+    Icon: SiLinkedin,
   },
   {
     name: "Instagram",
     href: config.social.instagram,
-    icon: <SiInstagram size={"24"} color={"#fff"} />,
+    Icon: SiInstagram,
   },
 ];
 
@@ -39,7 +40,12 @@ const SocialMediaButtons = () => {
       {show &&
         BUTTONS.map((button) => (
           <Link href={button.href} key={button.name} target="_blank">
-            <Button variant={"ghost"}>{button.icon}</Button>
+            <Button
+              variant={"ghost"}
+              className="h-11 w-11 rounded-full border border-black/10 bg-white/80 text-black hover:bg-white hover:text-black dark:border-white/20 dark:bg-black/25 dark:text-white dark:hover:bg-black/40 dark:hover:text-white"
+            >
+              <button.Icon size={26} />
+            </Button>
           </Link>
         ))}
     </div>

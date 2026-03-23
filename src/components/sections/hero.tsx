@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
 import { Button } from "../ui/button";
-import { File, Github, Linkedin } from "lucide-react";
+import { File } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -16,30 +16,33 @@ import { config } from "@/data/config";
 
 const HeroSection = () => {
   const { isLoading } = usePreloader();
+  const authorParts = config.author.split(" ");
+  const heroNameTop = authorParts.slice(0, 2).join(" ");
+  const heroNameBottom = authorParts.slice(2).join(" ");
 
   return (
-    <section id="hero" className={cn("relative w-full h-screen")}>
-      <div className="grid md:grid-cols-2">
+    <section id="hero" className={cn("relative w-full min-h-[100svh]")}>
+      <div className="grid md:grid-cols-2 min-h-[100svh]">
         <div
           className={cn(
-            "h-[calc(100dvh-3rem)] md:h-[calc(100dvh-4rem)] z-[2]",
+            "min-h-[calc(100svh-3rem)] md:min-h-[calc(100svh-4rem)] z-[2]",
             "col-span-1",
             "flex flex-col justify-start md:justify-center items-center md:items-start",
-            "pt-28 sm:pt-0 sm:pb-32 md:p-24 lg:p-40 xl:p-48"
+            "px-5 sm:px-8 md:px-24 lg:px-32 xl:px-40",
+            "pt-28 sm:pt-24 md:pt-0 sm:pb-16 md:pb-0"
           )}
         >
           {!isLoading && (
             <>
-              <div className="">
+              <div className="w-full max-w-2xl">
                 <BlurIn delay={0.7}>
                   <p
                     className={cn(
-                      "md:self-start mt-4 font-thin text-md text-slate-500 dark:text-zinc-400 ml-3",
-                      "cursor-default font-display sm:text-xl md:text-xl whitespace-nowrap bg-clip-text "
+                      "md:self-start mt-2 text-xs sm:text-sm uppercase tracking-[0.22em]",
+                      "cursor-default text-cyan-800/85 dark:text-cyan-300/80"
                     )}
                   >
-                    Hi, I am
-                    <br className="md:hidden" />
+                    Hola, soy
                   </p>
                 </BlurIn>
                 <BlurIn delay={1}>
@@ -47,13 +50,15 @@ const HeroSection = () => {
                     <TooltipTrigger asChild>
                       <h1
                         className={cn(
-                          "font-thin text-6xl text-transparent text-slate-800 ml-1 text-left",
-                          "cursor-default text-edge-outline font-display sm:text-7xl md:text-9xl "
+                          "cursor-default text-left leading-[0.9] tracking-tight"
                         )}
                       >
-                        {config.author.split(" ")[0]}
-                        <br className="md:block hiidden" />
-                        {config.author.split(" ")[1]}
+                        <span className="block text-[clamp(1.95rem,4.8vw,3.75rem)] font-semibold bg-gradient-to-r from-zinc-900 via-slate-700 to-cyan-700 bg-clip-text text-transparent dark:from-zinc-100 dark:via-zinc-200 dark:to-cyan-200 drop-shadow-[0_8px_20px_rgba(15,23,42,0.18)]">
+                          {heroNameTop}
+                        </span>
+                        <span className="block -mt-1 text-[clamp(1.95rem,4.8vw,3.75rem)] font-semibold bg-gradient-to-r from-zinc-900 via-slate-700 to-cyan-700 bg-clip-text text-transparent dark:from-zinc-100 dark:via-zinc-200 dark:to-cyan-200 drop-shadow-[0_10px_22px_rgba(14,116,144,0.22)] dark:drop-shadow-[0_8px_20px_rgba(15,23,42,0.18)]">
+                          {heroNameBottom}
+                        </span>
                         {/* PLEASE hello??
 
                         <br className="md:block hiidden" />
@@ -64,7 +69,7 @@ const HeroSection = () => {
                       side="top"
                       className="dark:bg-white dark:text-black"
                     >
-                      theres something waiting for you in devtools
+                      hay algo esperandote en devtools
                     </TooltipContent>
                   </Tooltip>
                 </BlurIn>
@@ -72,30 +77,27 @@ const HeroSection = () => {
                 <BlurIn delay={1.2}>
                   <p
                     className={cn(
-                      "md:self-start md:mt-4 font-thin text-md text-slate-500 dark:text-zinc-400 ml-3",
-                      "cursor-default font-display sm:text-xl md:text-xl whitespace-nowrap bg-clip-text "
-                    )}
+                      "md:self-start md:mt-3 font-normal text-sm sm:text-base md:text-lg text-slate-700 dark:text-zinc-400",
+                      "cursor-default"
+                  )}
                   >
-                    AI Enthusiast
+                    Ingeniero Fullstack de IA
                   </p>
                 </BlurIn>
               </div>
-              <div className="mt-8 md:ml-2 flex flex-col gap-3">
+              <div className="mt-8 md:ml-2 flex w-full max-w-sm flex-col gap-3">
                 <Link
-                  href={
-                    "https://drive.google.com/file/d/1vjtWfqYGMIMK_rlBnmDEpKco9MiEaQss/view"
-                  }
-                  target="_blank"
-                  className="flex-1"
+                  href={"/hoja-de-vida"}
+                  className="block w-full"
                 >
                   <BoxReveal delay={2} width="100%" >
                     <Button className="flex items-center gap-2 w-full">
                       <File size={24} />
-                      <p>Resume</p>
+                      <p>Hoja de vida</p>
                     </Button>
                   </BoxReveal>
                 </Link>
-                <div className="md:self-start flex gap-3">
+                <div className="md:self-start flex flex-wrap gap-3">
                   <Tooltip delayDuration={300}>
                     <TooltipTrigger asChild>
                       <Link href={"#contact"}>
@@ -103,12 +105,12 @@ const HeroSection = () => {
                           variant={"outline"}
                           className="block w-full overflow-hidden"
                         >
-                          Hire Me
+                          Contratame
                         </Button>
                       </Link>
                     </TooltipTrigger>
                     <TooltipContent side="bottom">
-                      <p>pls 🥹 🙏</p>
+                      <p>hablemos 🥹 🙏</p>
                     </TooltipContent>
                   </Tooltip>
                   <Link
@@ -116,7 +118,7 @@ const HeroSection = () => {
                     target="_blank"
                   >
                     <Button variant={"outline"}>
-                      <SiGithub size={24} />
+                      <SiGithub size={24} className="text-black dark:text-white" />
                     </Button>
                   </Link>
                   <Link
@@ -124,7 +126,7 @@ const HeroSection = () => {
                     target="_blank"
                   >
                     <Button variant={"outline"}>
-                      <SiLinkedin size={24} />
+                      <SiLinkedin size={24} className="text-black dark:text-white" />
                     </Button>
                   </Link>
                 </div>
@@ -134,7 +136,7 @@ const HeroSection = () => {
         </div>
         <div className="grid col-span-1"></div>
       </div>
-      <div className="absolute bottom-10 left-[50%] translate-x-[-50%]">
+      <div className="absolute bottom-8 left-[50%] translate-x-[-50%] hidden sm:block">
         <ScrollDownIcon />
       </div>
     </section>

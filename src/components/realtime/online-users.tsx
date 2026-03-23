@@ -72,7 +72,7 @@ const OnlineUsers = () => {
           <div className="relative flex flex-col gap-2">
             <div className="flex items-center gap-2 h-fit">
               <div className="w-2 h-2 animate-pulse rounded-full bg-green-400"></div>
-              {users.length} online
+              {users.length} en linea
             </div>
             <div className="absolute bottom-0 right-0 h-2 text-[.13rem]">
               {/* <pre>/CHAT</pre> */}
@@ -88,27 +88,26 @@ const OnlineUsers = () => {
             if (activeTab === "chat") containerScrollBottom();
           }}
         >
-          <TabsList className="w-full h-8">
-            <TabsTrigger className="w-1/2 h-full" value="users">
-              Users
-            </TabsTrigger>
-            <TabsTrigger className="w-1/2 h-full" value="chat">
-              Chat
-            </TabsTrigger>
-          </TabsList>
+            <TabsList className="w-full h-8">
+              <TabsTrigger className="w-1/2 h-full" value="users">
+                Usuarios
+              </TabsTrigger>
+              <TabsTrigger className="w-1/2 h-full" value="chat">
+                Chat
+              </TabsTrigger>
+            </TabsList>
           <TabsContent value="users" className="w-full h-full overflow-auto">
             <ScrollArea className="w-full h-full modall">
               <motion.div>
                 <div className="space-y-2 mb-8">
                   <p className="text-sm text-muted-foreground text-center">
-                    There {users.length === 1 ? "is" : "are"} {users.length}{" "}
-                    user
-                    {users.length === 1 ? "" : "s"} online here!
+                    Hay {users.length} usuario{users.length === 1 ? "" : "s"} en
+                    linea aqui.
                   </p>
                   {users.length <= 1 && (
                     <p className="text-xs font-mono text-muted-foreground text-center text-yellow-600">
-                      (This is a feature not a bug
-                      <br /> invite some friends!)
+                      (Esto es una funcionalidad, no un bug
+                      <br /> invita a algunos amigos)
                     </p>
                   )}
                 </div>
@@ -150,7 +149,7 @@ const OnlineUsers = () => {
                       }}
                       className="mr-2"
                     >
-                      {msg.username} {msg.socketId === socket?.id && "(you)"}:
+                      {msg.username} {msg.socketId === socket?.id && "(tu)"}:
                     </span>
                     <span className="font-mono">{msg.content}</span>
                   </span>
@@ -161,10 +160,10 @@ const OnlineUsers = () => {
               <Input
                 className="flex-1"
                 ref={inputRef}
-                placeholder="Enter message"
+                placeholder="Escribe un mensaje"
                 onKeyDown={(e) => e.key === "Enter" && sendMessage()}
               />
-              <Button onClick={sendMessage}>Send</Button>
+              <Button onClick={sendMessage}>Enviar</Button>
             </div>
           </TabsContent>
         </Tabs>
@@ -243,7 +242,7 @@ const UserItem = ({
         ) : (
           <>
             <span className="text-sm">
-              {user.name} {user.socketId === socket?.id && "(you)"}
+              {user.name} {user.socketId === socket?.id && "(tu)"}
             </span>
             {user.socketId === socket?.id && (
               <Button

@@ -53,8 +53,12 @@ const SocketContextProvider = ({ children }: { children: ReactNode }) => {
 
   // SETUP SOCKET.IO
   useEffect(() => {
-    const username =  localStorage.getItem("username") || generateRandomCursor().name
-    const socket = io(process.env.NEXT_PUBLIC_WS_URL!, {
+    const wsUrl = process.env.NEXT_PUBLIC_WS_URL;
+    if (!wsUrl) return;
+
+    const username =
+      localStorage.getItem("username") || generateRandomCursor().name;
+    const socket = io(wsUrl, {
       query: { username },
     });
     setSocket(socket);

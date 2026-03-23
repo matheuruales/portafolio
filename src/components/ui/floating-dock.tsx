@@ -15,9 +15,7 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { opacity } from "../header/anim";
 
 export const FloatingDock = ({
   items,
@@ -31,7 +29,7 @@ export const FloatingDock = ({
   return (
     <>
       <FloatingDockDesktop items={items} className={desktopClassName} />
-      {/* <FloatingDockMobile items={items} className={mobileClassName} /> */}
+      <FloatingDockMobile items={items} className={mobileClassName} />
     </>
   );
 };
@@ -43,49 +41,22 @@ const FloatingDockMobile = ({
   items: { title: string; icon: React.ReactNode }[];
   className?: string;
 }) => {
-  const [open, setOpen] = useState(false);
   return (
-    <div className={cn("relative block md:hidden", className)}>
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            layoutId="nav"
-            className="absolute bottom-full mb-2 inset-x-0 flex flex-col gap-2"
-          >
-            {items.map((item, idx) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                exit={{
-                  opacity: 0,
-                  y: 10,
-                  transition: {
-                    delay: idx * 0.05,
-                  },
-                }}
-                transition={{ delay: (items.length - 1 - idx) * 0.05 }}
-              >
-                <div
-                  key={item.title}
-                  className="h-10 w-10 rounded-full bg-gray-50 dark:bg-neutral-900 flex items-center justify-center"
-                >
-                  <div className="h-4 w-4">{item.icon}</div>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
-      {/* <button
-        onClick={() => setOpen(!open)}
-        className="h-10 w-10 rounded-full bg-gray-50 dark:bg-neutral-800 flex items-center justify-center"
-      >
-        <IconLayoutNavbarCollapse className="h-5 w-5 text-neutral-500 dark:text-neutral-400" />
-      </button> */}
+    <div
+      className={cn(
+        "flex md:hidden w-full items-center gap-2 overflow-x-auto rounded-xl bg-gray-50/80 dark:bg-neutral-900/80 p-2",
+        className
+      )}
+    >
+      {items.map((item) => (
+        <div
+          key={item.title}
+          className="shrink-0 h-10 min-w-10 rounded-full bg-gray-200 dark:bg-neutral-800 flex items-center justify-center px-2"
+          title={item.title}
+        >
+          <div className="h-4 w-4 flex items-center justify-center">{item.icon}</div>
+        </div>
+      ))}
     </div>
   );
 };
@@ -132,10 +103,8 @@ const FloatingDockDesktop = ({
         }}
         onMouseLeave={() => mouseX.set(Infinity)}
         className={cn(
-          // "hidden md:flex",
-          "flex gap-2 md:gap-4",
+          "hidden md:flex gap-2 md:gap-4",
           "mx-auto h-16 items-end  rounded-2xl bg-gray-50 dark:bg-neutral-900 px-4 pb-3",
-          // "blur-sm brightness-50",
           className
         )}
       >
