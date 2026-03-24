@@ -22,7 +22,7 @@ export const FloatingDock = ({
   desktopClassName,
   mobileClassName,
 }: {
-  items: { title: string; icon: React.ReactNode }[];
+  items: { title: string; icon: React.ReactNode; wide?: boolean }[];
   desktopClassName?: string;
   mobileClassName?: string;
 }) => {
@@ -38,7 +38,7 @@ const FloatingDockMobile = ({
   items,
   className,
 }: {
-  items: { title: string; icon: React.ReactNode }[];
+  items: { title: string; icon: React.ReactNode; wide?: boolean }[];
   className?: string;
 }) => {
   return (
@@ -51,10 +51,13 @@ const FloatingDockMobile = ({
       {items.map((item) => (
         <div
           key={item.title}
-          className="shrink-0 h-10 min-w-10 rounded-full bg-gray-200 dark:bg-neutral-800 flex items-center justify-center px-2"
+          className={cn(
+            "shrink-0 h-10 bg-gray-200 dark:bg-neutral-800 flex items-center justify-center px-3",
+            item.wide ? "min-w-[4rem] rounded-xl" : "min-w-10 rounded-full"
+          )}
           title={item.title}
         >
-          <div className="h-4 w-4 flex items-center justify-center">{item.icon}</div>
+          <div className={cn("flex items-center justify-center", item.wide ? "gap-1" : "h-4 w-4")}>{item.icon}</div>
         </div>
       ))}
     </div>
@@ -65,7 +68,7 @@ const FloatingDockDesktop = ({
   items,
   className,
 }: {
-  items: { title: string; icon: React.ReactNode }[];
+  items: { title: string; icon: React.ReactNode; wide?: boolean }[];
   className?: string;
 }) => {
   let mouseX = useMotionValue(Infinity);
@@ -109,7 +112,7 @@ const FloatingDockDesktop = ({
         )}
       >
         {items.map((item) => (
-          <IconContainer mouseX={mouseX} key={item.title} {...item} />
+          <IconContainer mouseX={mouseX} key={item.title} {...item} wide={item.wide} />
         ))}
       </motion.div>
       {showHint && (
@@ -142,10 +145,12 @@ function IconContainer({
   mouseX,
   title,
   icon,
+  wide,
 }: {
   mouseX: MotionValue;
   title: string;
   icon: React.ReactNode;
+  wide?: boolean;
 }) {
   let ref = useRef<HTMLDivElement>(null);
 
@@ -155,10 +160,13 @@ function IconContainer({
     return val - bounds.x - bounds.width / 2;
   });
 
-  let widthTransform = useTransform(distance, [-150, 0, 150], [40, 80, 40]);
+  const minW = wide ? 64 : 40;
+  const maxW = wide ? 104 : 80;
+
+  let widthTransform = useTransform(distance, [-150, 0, 150], [minW, maxW, minW]);
   let heightTransform = useTransform(distance, [-150, 0, 150], [40, 80, 40]);
 
-  let widthTransformIcon = useTransform(distance, [-150, 0, 150], [20, 40, 20]);
+  let widthTransformIcon = useTransform(distance, [-150, 0, 150], [wide ? 36 : 20, wide ? 56 : 40, wide ? 36 : 20]);
   let heightTransformIcon = useTransform(
     distance,
     [-150, 0, 150],
@@ -195,7 +203,10 @@ function IconContainer({
       style={{ width, height }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="aspect-square rounded-full bg-gray-200 dark:bg-neutral-800 flex items-center justify-center relative"
+      className={cn(
+        "bg-gray-200 dark:bg-neutral-800 flex items-center justify-center relative",
+        wide ? "rounded-xl" : "aspect-square rounded-full"
+      )}
     >
       <AnimatePresence>
         {hovered && (

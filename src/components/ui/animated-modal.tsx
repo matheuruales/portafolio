@@ -9,7 +9,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { ScrollArea } from "./scroll-area";
+
 
 interface ModalContextType {
   open: boolean;
@@ -103,14 +103,14 @@ export const ModalBody = ({
             opacity: 0,
             backdropFilter: "blur(0px)",
           }}
-          className="modall fixed [perspective:800px] [transform-style:preserve-3d] inset-0 h-full w-full  flex items-center justify-center z-50"
+          className="modall fixed [perspective:800px] [transform-style:preserve-3d] inset-0 h-full w-full flex items-center justify-center z-[80] overflow-hidden py-6"
         >
           <Overlay />
 
           <motion.div
             ref={modalRef}
             className={cn(
-              "w-[96vw] sm:w-[92vw] min-h-[50%] max-h-[90%] md:max-w-[40%] bg-white dark:bg-neutral-950 border border-transparent dark:border-neutral-800 rounded-xl md:rounded-2xl relative z-50 flex flex-col flex-1 overflow-hidden",
+              "w-[96vw] sm:w-[92vw] min-h-[50%] max-h-full bg-white dark:bg-neutral-950 border border-transparent dark:border-neutral-800 rounded-xl md:rounded-2xl relative z-[80] flex flex-col overflow-hidden",
               className
             )}
             initial={{
@@ -137,9 +137,7 @@ export const ModalBody = ({
             }}
           >
             <CloseIcon />
-            <ScrollArea className="h-[75dvh] sm:h-[80dvh] w-full rounded-md border">
-              {children}
-            </ScrollArea>
+            {children}
           </motion.div>
         </motion.div>
       )}
@@ -155,7 +153,7 @@ export const ModalContent = ({
   className?: string;
 }) => {
   return (
-    <div className={cn("flex flex-col flex-1 p-3 md:p-10", className)}>
+    <div className={cn("flex flex-col flex-1 p-3 md:p-10 overflow-y-auto min-h-0", className)}>
       {children}
     </div>
   );
@@ -171,7 +169,7 @@ export const ModalFooter = ({
   return (
     <div
       className={cn(
-        "flex justify-end p-4 bg-gray-100 dark:bg-neutral-900",
+        "flex justify-end p-4 bg-gray-100 dark:bg-neutral-900 border-t border-gray-200 dark:border-neutral-800 shrink-0",
         className
       )}
     >
@@ -195,7 +193,7 @@ const Overlay = ({ className }: { className?: string }) => {
         opacity: 0,
         backdropFilter: "blur(0px)",
       }}
-      className={`modal-overlay fixed inset-0 h-full w-full bg-black bg-opacity-50 z-50 ${className}`}
+      className={`modal-overlay fixed inset-0 h-full w-full bg-black bg-opacity-50 z-[79] ${className}`}
       onClick={() => setOpen(false)}
     ></motion.div>
   );

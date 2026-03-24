@@ -7,11 +7,11 @@ import {
   ModalContent,
   ModalFooter,
   ModalTrigger,
+  useModal,
 } from "../ui/animated-modal";
 import { FloatingDock } from "../ui/floating-dock";
 import Link from "next/link";
 
-import SmoothScroll from "../smooth-scroll";
 import projects, { Project } from "@/data/projects";
 
 const ProjectsSection = () => {
@@ -61,16 +61,12 @@ const Modall = ({ project }: { project: Project }) => {
             </div>
           </div>
         </ModalTrigger>
-        <ModalBody className="w-[94vw] max-w-4xl max-h-[88dvh] overflow-auto">
-          <SmoothScroll isInsideModal={true}>
-            <ModalContent>
-              <ProjectContents project={project} />
-            </ModalContent>
-          </SmoothScroll>
+        <ModalBody className="w-[94vw] max-w-4xl">
+          <ModalContent className="p-0 md:p-0">
+            <ProjectContents project={project} />
+          </ModalContent>
           <ModalFooter className="gap-3 flex-wrap">
-            <button className="px-2 py-1 bg-slate-100 text-slate-900 dark:bg-black dark:border-black dark:text-white border border-slate-300 dark:border-zinc-700 rounded-md text-sm w-28">
-              Cerrar
-            </button>
+            <CloseModalButton />
             {project.live ? (
               <a
                 href={project.live}
@@ -93,60 +89,68 @@ const Modall = ({ project }: { project: Project }) => {
 };
 export default ProjectsSection;
 
+const CloseModalButton = () => {
+  const { setOpen } = useModal();
+
+  return (
+    <button
+      type="button"
+      onClick={() => setOpen(false)}
+      className="px-2 py-1 bg-slate-100 text-slate-900 dark:bg-black dark:border-black dark:text-white border border-slate-300 dark:border-zinc-700 rounded-md text-sm w-28"
+    >
+      Cerrar
+    </button>
+  );
+};
+
 const ProjectContents = ({ project }: { project: Project }) => {
   return (
-    <>
-      <h4 className="text-lg sm:text-xl md:text-2xl text-neutral-600 dark:text-neutral-100 font-bold text-center mb-8">
-        {project.title}
-      </h4>
-      <div className="flex flex-col md:flex-row md:justify-evenly w-full overflow-hidden md:overflow-visible">
-        <div className="flex flex-row md:flex-col-reverse justify-center items-center gap-2 text-3xl mb-8 overflow-x-auto w-full md:w-auto">
-          <p className="text-sm mt-1 text-neutral-600 dark:text-neutral-500">
-            Tecnologias frontend
-          </p>
+    <div className="flex flex-col">
+      {/* Hero cover */}
+      <div className="relative w-full aspect-[21/9] shrink-0 overflow-hidden">
+        <Image
+          src={project.src}
+          alt={project.title}
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />
+        <div className="absolute bottom-0 left-0 p-4 md:p-6">
+          <span className="text-xs bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 rounded-full px-2.5 py-0.5 mb-2 inline-block">
+            {project.category}
+          </span>
+          <h4 className="text-xl md:text-3xl font-bold text-white mt-1">
+            {project.title}
+          </h4>
+        </div>
+      </div>
+
+      {/* Skills + Content */}
+      <div className="p-4 md:p-8 flex flex-col gap-6">
+        {/* Skills row */}
+        <div className="flex flex-col sm:flex-row gap-4">
           {project.skills.frontend?.length > 0 && (
-            <FloatingDock items={project.skills.frontend} />
+            <div className="flex-1 min-w-0">
+              <p className="text-xs uppercase tracking-widest text-neutral-500 dark:text-neutral-400 mb-2">
+                Frontend
+              </p>
+              <FloatingDock items={project.skills.frontend} />
+            </div>
+          )}
+          {project.skills.backend?.length > 0 && (
+            <div className="flex-1 min-w-0">
+              <p className="text-xs uppercase tracking-widest text-neutral-500 dark:text-neutral-400 mb-2">
+                Backend
+              </p>
+              <FloatingDock items={project.skills.backend} />
+            </div>
           )}
         </div>
-        {project.skills.backend?.length > 0 && (
-          <div className="flex flex-row md:flex-col-reverse justify-center items-center gap-2 text-3xl mb-8 overflow-x-auto w-full md:w-auto">
-            <p className="text-sm mt-1 text-neutral-600 dark:text-neutral-500">
-              Tecnologias backend
-            </p>
-            <FloatingDock items={project.skills.backend} />
-          </div>
-        )}
+
+        {/* Project content */}
+        <div>{project.content}</div>
       </div>
-      {/* <div className="flex justify-center items-center">
-        {project.screenshots.map((image, idx) => (
-          <motion.div
-            key={"images" + idx}
-            style={{
-              rotate: Math.random() * 20 - 10,
-            }}
-            whileHover={{
-              scale: 1.1,
-              rotate: 0,
-              zIndex: 100,
-            }}
-            whileTap={{
-              scale: 1.1,
-              rotate: 0,
-              zIndex: 100,
-            }}
-            className="rounded-xl -mr-4 mt-4 p-1 bg-white dark:bg-neutral-800 dark:border-neutral-700 border border-neutral-100 flex-shrink-0 overflow-hidden"
-          >
-            <Image
-              src={`${project.src.split("1.png")[0]}${image}`}
-              alt="screenshots"
-              width="500"
-              height="500"
-              className="rounded-lg h-20 w-20 md:h-40 md:w-40 object-cover flex-shrink-0"
-            />
-          </motion.div>
-        ))}
-      </div> */}
-      {project.content}
-    </>
+    </div>
   );
 };

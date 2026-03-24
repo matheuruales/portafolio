@@ -55,6 +55,7 @@ export type Skill = {
   bg: string;
   fg: string;
   icon: ReactNode;
+  wide?: boolean;
 };
 
 const PROJECT_SKILLS = {
@@ -98,6 +99,7 @@ const PROJECT_SKILLS = {
     title: "Java 21 + Maven",
     bg: "black",
     fg: "white",
+    wide: true,
     icon: (
       <span className="flex items-center gap-1">
         <FaJava />
